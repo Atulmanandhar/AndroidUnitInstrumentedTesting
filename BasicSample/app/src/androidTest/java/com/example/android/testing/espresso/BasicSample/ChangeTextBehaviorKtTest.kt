@@ -20,9 +20,11 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import android.app.Activity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -76,6 +78,36 @@ class ChangeTextBehaviorKtTest {
         // This view is in a different Activity, no need to tell Espresso.
         onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
     }
+
+    private fun pause() {
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+    }
+    @Test
+    fun validateStringsInTextViewInMainActivity() {
+        Espresso.onView(ViewMatchers.withId(R.id.textToBeChanged))
+            .check(ViewAssertions.matches(ViewMatchers.withText(R.string.hello_world)))
+
+        pause()
+    }
+
+    // Enter “123” and press Change Text Button, and test the string
+    @Test
+    fun validateEditTextUserInputChangeTextButton() {
+        val inputText = "123"
+        Espresso.onView(ViewMatchers.withId(R.id.editTextUserInput))
+            .perform(ViewActions.typeText(inputText))
+        Espresso.onView(ViewMatchers.withId(R.id.changeTextBt))
+            .perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.textToBeChanged))
+            .check(ViewAssertions.matches(ViewMatchers.withText(inputText)))
+        pause()
+    }
+
+    
 
     companion object {
 
