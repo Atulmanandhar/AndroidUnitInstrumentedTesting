@@ -132,7 +132,43 @@ class ChangeTextBehaviorKtTest {
             .check(ViewAssertions.matches(ViewMatchers.withText("")))
         pause()
     }
-    
+
+
+    fun validateEmptyEditTextUserInputOpenActivityChangeTextButtonInShowTextView() {
+        Espresso.onView(ViewMatchers.withId(R.id.activityChangeTextBtn))
+            .perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.show_text_view))
+            .check(ViewAssertions.matches(ViewMatchers.withText("")))
+
+        pause()
+    }
+
+    // Enter “abcdef” and press Change Text Button, and test the string
+    @Test
+    fun validateAbcdefEditTextUserInputChangeTextButton() {
+        val inputText = "abcdef"
+        Espresso.onView(ViewMatchers.withId(R.id.editTextUserInput))
+            .perform(ViewActions.typeText(inputText))
+        Espresso.onView(ViewMatchers.withId(R.id.changeTextBt))
+            .perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.textToBeChanged))
+            .check(ViewAssertions.matches(ViewMatchers.withText(inputText)))
+        pause()
+    }
+
+    // Enter “abcdef” and press Open Activity and Change Text Button, and test the string in ShowTextActivity
+    @Test
+    fun validateAbcdefEditTextUserInputOpenActivityChangeTextButton() {
+        val inputText = "abcdef"
+        Espresso.onView(ViewMatchers.withId(R.id.editTextUserInput))
+            .perform(ViewActions.typeText(inputText))
+        Espresso.onView(ViewMatchers.withId(R.id.activityChangeTextBtn))
+            .perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.show_text_view))
+            .check(ViewAssertions.matches(ViewMatchers.withText(inputText)))
+        pause()
+    }
+
 
     companion object {
 
