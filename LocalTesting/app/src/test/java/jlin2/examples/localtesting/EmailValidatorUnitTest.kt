@@ -32,5 +32,8 @@ class EmailValidatorUnitTest {
         assertFalse(EmailValidator.isValidEmail("testing123"))
     }
 
-
+    @Test
+    fun testEmailEmptyString() {
+        assertFalse(EmailValidator.isValidEmail(""))
+    }
 }
