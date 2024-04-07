@@ -107,6 +107,31 @@ class ChangeTextBehaviorKtTest {
         pause()
     }
 
+
+
+    // Enter “123” and press Open Activity and Change Text Button, and test the string in ShowTextActivity
+    @Test
+    fun validateEditTextOpenActivityChangeTextButton() {
+        val inputText = "123"
+        Espresso.onView(ViewMatchers.withId(R.id.editTextUserInput))
+            .perform(ViewActions.typeText(inputText))
+        Espresso.onView(ViewMatchers.withId(R.id.activityChangeTextBtn))
+            .perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.show_text_view))
+            .check(ViewAssertions.matches(ViewMatchers.withText(inputText)))
+        pause()
+    }
+
+
+    // Without entering anything and press Change Text Button and test the string (empty/null)
+    @Test
+    fun validateEmptyEditTextUserInputChangeTextButtonWithEmptyString() {
+        Espresso.onView(ViewMatchers.withId(R.id.changeTextBt))
+            .perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.textToBeChanged))
+            .check(ViewAssertions.matches(ViewMatchers.withText("")))
+        pause()
+    }
     
 
     companion object {
